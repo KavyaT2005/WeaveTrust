@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body{margin:0;background:#eee;font-family:sans-serif}
+.top{background:#3b73d1;color:white;padding:15px}
+table{width:80%;margin:30px auto;background:white;border-collapse:collapse}
+td,th{padding:10px;border:1px solid #ddd;text-align:center}
+a{color:#3b73d1;text-decoration:none;font-weight:bold}
+</style>
+</head>
+
+<body>
+
+<div class="top">
+Orders for Owner: {{owner_name}}
+<a href="/weaver" style="color:white;float:right">⬅ Back</a>
+</div>
+
+<h3 style="text-align:center">Orders</h3>
+
+<table>
+<tr>
+<th>ID</th>
+<th>Cloth</th>
+<th>Total</th>
+<th>Produced</th>
+<th>Status</th>
+</tr>
+
+{% for o in orders %}
+<tr>
+<td>{{o.id}}</td>
+<td>{{o.cloth}}</td>
+<td>{{o.meters}}</td>
+<td>{{o.produced}}</td>
+<td>{{o.status}}</td>
+</tr>
+{% endfor %}
+</table>
+
+<h3 style="text-align:center">Production History</h3>
+
+<table>
+<tr>
+<th>Date</th>
+<th>Meters Added</th>
+</tr>
+
+{% for h in history %}
+<tr>
+<td>{{h.date}}</td>
+<td>{{h.meters}}</td>
+</tr>
+{% endfor %}
+</table>
+
+</body>
+</html>

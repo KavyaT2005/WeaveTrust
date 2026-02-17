@@ -1,0 +1,117 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+}
+
+
+/* NAVBAR */
+.navbar {
+    background: linear-gradient(90deg, #3a7bd5, #00d2ff);
+    color: white;
+    padding: 15px 30px;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+/* HERO IMAGE */
+.hero {
+    height: 220px;
+    background: url("/static/hero.png") center/cover no-repeat;
+    animation: fadeIn 2s ease-in-out;
+}
+
+
+/* CONTAINER */
+.container {
+    padding: 40px;
+}
+
+
+/* CARD */
+.card {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    border-radius: 18px;
+    padding: 30px;
+    width: 400px;
+    margin: auto;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    animation: slideUp 0.6s ease;
+}
+
+
+/* INPUTS */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #3a7bd5, #00d2ff);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+
+/* TABLE */
+table {
+    width: 90%;
+    margin: 30px auto;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    animation: fadeIn 1s ease;
+}
+
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+
+th {
+    background: #3a7bd5;
+    color: white;
+}
+
+
+/* ANIMATIONS */
+@keyframes slideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

@@ -1,0 +1,25 @@
+<style>
+body{background:#f2f2f2;font-family:sans-serif}
+.card{
+width:350px;margin:120px auto;padding:30px;
+background:#fff;border-radius:10px;
+box-shadow:0 0 15px #ccc;text-align:center}
+input,select{width:100%;padding:10px;margin:10px 0}
+button{background:#3b73d1;color:white;border:none;padding:10px;width:100%}
+.msg{color:red}
+</style>
+
+
+<div class="card">
+<h2>Login</h2>
+<form method="post">
+<input name="username" placeholder="Username">
+<input name="password" type="password" placeholder="Password">
+<button>Login</button>
+</form>
+<div class="msg">{{msg}}</div>
+<a href="/signup">Create account</a>
+</div>
+
+
+

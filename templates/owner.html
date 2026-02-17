@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body{margin:0;background:#eee;font-family:sans-serif}
+.top{background:#3b73d1;color:white;padding:15px}
+.card{
+width:400px;margin:30px auto;background:white;
+padding:25px;border-radius:10px;box-shadow:0 0 10px #ccc}
+input{width:100%;padding:10px;margin:8px 0}
+button{background:#3b73d1;color:white;border:none;padding:10px;width:100%}
+table{width:60%;margin:30px auto;background:white;border-collapse:collapse}
+td,th{padding:10px;border:1px solid #ddd;text-align:center}
+a{color:#3b73d1;text-decoration:none;font-weight:bold}
+
+.badge{
+padding:4px 10px;
+border-radius:6px;
+font-size:13px;
+font-weight:bold;
+}
+.active{background:#d4edda;color:#155724}
+.completed{background:#f8d7da;color:#721c24}
+</style>
+</head>
+
+<body>
+
+<div class="top">
+Owner Dashboard | {{session.user}}
+<a href="/logout" style="color:white;float:right">Logout</a>
+</div>
+
+<!-- CREATE ORDER -->
+<div class="card">
+<h2>Create Order</h2>
+<form method="post">
+<input name="weaver" placeholder="Weaver name" required>
+<input name="cloth" placeholder="Cloth" required>
+<input name="meters" placeholder="Meters" required>
+<input name="rate" placeholder="Rate" required>
+<button>Create</button>
+</form>
+</div>
+
+<!-- CONNECTED WEAVERS -->
+<h2 style="text-align:center">Connected Weavers</h2>
+
+<table>
+<tr>
+<th>Weaver Name</th>
+<th>Status</th>
+<th>View Orders</th>
+</tr>
+
+{% if weavers %}
+    {% for w in weavers %}
+    <tr>
+        <td>{{w.weaver}}</td>
+
+        <td>
+            {% if w.active == 1 %}
+                <span class="badge active">Active</span>
+            {% else %}
+                <span class="badge completed">Completed</span>
+            {% endif %}
+        </td>
+
+        <td>
+            <a href="/owner/weaver/{{w.weaver}}">
+                View Orders
+            </a>
+        </td>
+    </tr>
+    {% endfor %}
+{% else %}
+    <tr>
+        <td colspan="3">No orders assigned yet</td>
+    </tr>
+{% endif %}
+</table>
+
+</body>
+</html>
