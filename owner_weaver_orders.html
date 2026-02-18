@@ -1,67 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Orders for Weaver</title>
+    <title>Weaver Orders</title>
 
-<style>
-body{
-    margin:0;
-    background:#f4f6f9;
-    font-family:Arial, sans-serif;
-}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-.top{
-    background:#3b73d1;
-    color:white;
-    padding:16px 24px;
-    font-size:18px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
+    <style>
+        body{
+            margin:0;
+            font-family:Arial, sans-serif;
+            background:#f4f6f9;
+        }
 
-.container{
-    padding:30px;
-}
+        .top{
+            background:#3b73d1;
+            color:white;
+            padding:15px 20px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            font-size:18px;
+        }
 
-table{
-    width:100%;
-    background:white;
-    border-collapse:collapse;
-    box-shadow:0 4px 12px rgba(0,0,0,0.1);
-    margin-bottom:30px;
-}
+        .container{
+            padding:30px;
+        }
 
-td,th{
-    padding:12px;
-    border:1px solid #ddd;
-    text-align:center;
-}
+        table{
+            width:100%;
+            border-collapse:collapse;
+            background:white;
+            box-shadow:0 6px 16px rgba(0,0,0,0.1);
+            border-radius:10px;
+            overflow:hidden;
+        }
 
-th{
-    background:#f1f4f8;
-}
+        th, td{
+            padding:12px;
+            border-bottom:1px solid #eee;
+            text-align:center;
+        }
 
-.badge{
-    padding:6px 12px;
-    border-radius:20px;
-    font-size:13px;
-}
+        th{
+            background:#f1f4f8;
+        }
 
-.completed{
-    background:#d4f4dd;
-    color:#187a3c;
-}
+        .badge{
+            padding:6px 12px;
+            border-radius:20px;
+            font-size:13px;
+        }
 
-.inprogress{
-    background:#ffe9b3;
-    color:#8a5a00;
-}
+        .inprogress{
+            background:#ffe9b3;
+            color:#8a5a00;
+        }
 
-h2{
-    margin-top:0;
-}
-</style>
+        .completed{
+            background:#d4f4dd;
+            color:#187a3c;
+        }
+
+        .graph-card{
+            margin-top:30px;
+            background:white;
+            padding:20px;
+            border-radius:12px;
+            box-shadow:0 6px 16px rgba(0,0,0,0.1);
+            width:520px;
+        }
+    </style>
 </head>
 
 <body>
@@ -73,67 +81,89 @@ h2{
 
 <div class="container">
 
-<h2>Orders</h2>
+    <h2>Orders</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Cloth</th>
+            <th>Total</th>
+            <th>Produced</th>
+            <th>Status</th>
+        </tr>
 
-<table>
-<tr>
-    <th>ID</th>
-    <th>Cloth</th>
-    <th>Total Meters</th>
-    <th>Produced</th>
-    <th>Status</th>
-</tr>
+        {% for o in orders %}
+        <tr>
+            <td>{{ o.id }}</td>
+            <td>{{ o.cloth }}</td>
+            <td>{{ o.meters }}</td>
+            <td>{{ o.produced }}</td>
+            <td>
+                {% if o.status == "Completed" %}
+                    <span class="badge completed">Completed</span>
+                {% else %}
+                    <span class="badge inprogress">In Progress</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 
-{% if orders %}
-    {% for o in orders %}
-    <tr>
-        <td>{{ o.id }}</td>
-        <td>{{ o.cloth }}</td>
-        <td>{{ o.meters }}</td>
-        <td>{{ o.produced }}</td>
-        <td>
-            {% if o.status == "Completed" %}
-                <span class="badge completed">Completed</span>
-            {% else %}
-                <span class="badge inprogress">In Progress</span>
-            {% endif %}
-        </td>
-    </tr>
-    {% endfor %}
-{% else %}
-    <tr>
-        <td colspan="5">No orders assigned</td>
-    </tr>
-{% endif %}
-</table>
-
-<h2>Production History</h2>
-
-<table>
-<tr>
-    <th>Order ID</th>
-    <th>Cloth</th>
-    <th>Date</th>
-    <th>Meters Added</th>
-</tr>
-
-{% if history %}
-    {% for h in history %}
-    <tr>
-        <td>{{ h.order_id }}</td>
-        <td>{{ h.cloth }}</td>
-        <td>{{ h.date }}</td>
-        <td>{{ h.meters }}</td>
-    </tr>
-    {% endfor %}
-{% else %}
-    <tr>
-        <td colspan="4">No production history</td>
-    </tr>
-{% endif %}
-</table>
-
+    {% if performance %}
+    <div class="graph-card">
+        <b>Performance Graph</b>
+        <div style="height:220px;">
+            <canvas id="performanceChart"></canvas>
+        </div>
+    </div>
+    {% endif %}
 </div>
+
+{% if performance %}
+<!-- ✅ SAFE JSON HOLDER -->
+<script type="application/json" id="performance-data">
+{{ performance | tojson }}
+</script>
+
+<script>
+    const perfData = JSON.parse(
+        document.getElementById("performance-data").textContent
+    );
+
+    const labels = perfData.map(p => p.date);
+    const values = perfData.map(p => p.total);
+
+    const ctx = document.getElementById("performanceChart").getContext("2d");
+
+    new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                borderColor: "#ff8c00",
+                backgroundColor: "rgba(255,140,0,0.2)",
+                fill: true,
+                tension: 0.3,
+                pointRadius: 6,
+                pointBackgroundColor: "#ff8c00",
+                pointBorderColor: "#000",
+                pointBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true },
+                x: {}
+            }
+        }
+    });
+</script>
+{% endif %}
 
 </body>
 </html>
