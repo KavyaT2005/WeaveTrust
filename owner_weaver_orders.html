@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Orders for Weaver</title>
+
+<style>
+body{
+    margin:0;
+    background:#f4f6f9;
+    font-family:Arial, sans-serif;
+}
+
+.top{
+    background:#3b73d1;
+    color:white;
+    padding:16px 24px;
+    font-size:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.container{
+    padding:30px;
+}
+
+table{
+    width:100%;
+    background:white;
+    border-collapse:collapse;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom:30px;
+}
+
+td,th{
+    padding:12px;
+    border:1px solid #ddd;
+    text-align:center;
+}
+
+th{
+    background:#f1f4f8;
+}
+
+.badge{
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+}
+
+.completed{
+    background:#d4f4dd;
+    color:#187a3c;
+}
+
+.inprogress{
+    background:#ffe9b3;
+    color:#8a5a00;
+}
+
+h2{
+    margin-top:0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="top">
+    Orders for Weaver: {{ weaver_name }}
+    <a href="/owner" style="color:white;text-decoration:none">← Back</a>
+</div>
+
+<div class="container">
+
+<h2>Orders</h2>
+
+<table>
+<tr>
+    <th>ID</th>
+    <th>Cloth</th>
+    <th>Total Meters</th>
+    <th>Produced</th>
+    <th>Status</th>
+</tr>
+
+{% if orders %}
+    {% for o in orders %}
+    <tr>
+        <td>{{ o.id }}</td>
+        <td>{{ o.cloth }}</td>
+        <td>{{ o.meters }}</td>
+        <td>{{ o.produced }}</td>
+        <td>
+            {% if o.status == "Completed" %}
+                <span class="badge completed">Completed</span>
+            {% else %}
+                <span class="badge inprogress">In Progress</span>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+{% else %}
+    <tr>
+        <td colspan="5">No orders assigned</td>
+    </tr>
+{% endif %}
+</table>
+
+<h2>Production History</h2>
+
+<table>
+<tr>
+    <th>Order ID</th>
+    <th>Cloth</th>
+    <th>Date</th>
+    <th>Meters Added</th>
+</tr>
+
+{% if history %}
+    {% for h in history %}
+    <tr>
+        <td>{{ h.order_id }}</td>
+        <td>{{ h.cloth }}</td>
+        <td>{{ h.date }}</td>
+        <td>{{ h.meters }}</td>
+    </tr>
+    {% endfor %}
+{% else %}
+    <tr>
+        <td colspan="4">No production history</td>
+    </tr>
+{% endif %}
+</table>
+
+</div>
+
+</body>
+</html>
