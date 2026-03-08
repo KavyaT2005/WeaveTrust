@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WeaveTrust</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #4a90e2, #6dd5fa);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Floating background circles */
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            animation: float 8s infinite ease-in-out;
+        }
+
+        .c1 { width: 200px; height: 200px; top: 10%; left: 15%; }
+        .c2 { width: 150px; height: 150px; bottom: 15%; right: 10%; animation-delay: 2s; }
+        .c3 { width: 100px; height: 100px; top: 60%; left: 70%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Glass card */
+        .card {
+            backdrop-filter: blur(15px);
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 40px 60px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeUp 1.5s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-size: 52px;
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            letter-spacing: 3px;
+            animation: glow 2s ease infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+            to { text-shadow: 0 0 25px rgba(255,255,255,0.9); }
+        }
+
+        .tagline {
+            color: rgba(255,255,255,0.9);
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        /* Hero image */
+        .hero {
+            width: 120px;
+            margin-top: 20px;
+            animation: heroFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes heroFloat {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .loading {
+            margin-top: 15px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%,100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+    </style>
+
+    <script>
+        setTimeout(() => {
+            window.location.href = "/login";
+        }, 3000);
+    </script>
+</head>
+
+<body>
+
+    <!-- Floating shapes -->
+    <div class="bg-circle c1"></div>
+    <div class="bg-circle c2"></div>
+    <div class="bg-circle c3"></div>
+
+    <div class="card">
+        <div class="logo">WeaveTrust</div>
+        <div class="tagline">Smart Textile Production Tracking</div>
+
+        <img src="/static/hero.png" class="hero">
+
+        <div class="loading">Loading secure workspace...</div>
+    </div>
+
+</body>
+</html>

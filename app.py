@@ -9,8 +9,8 @@ app = Flask(__name__)
 app.secret_key = "weavetrust_secret"
 
 # ---------------- TWILIO CONFIG ----------------
-TWILIO_SID = "AC9b9407e82e030601afbc02fdea322486"
-TWILIO_AUTH = "909a55d3259cd84e0cead7c37beea146"
+TWILIO_SID = "YOUR_TWILIO_SID"
+TWILIO_AUTH = "YOUR_TWILIO_AUTH_TOKEN"
 TWILIO_NUMBER = "whatsapp:+14155238886"
 
 client = Client(TWILIO_SID, TWILIO_AUTH)

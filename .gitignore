@@ -1,0 +1,16 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Database
+weavetrust.db
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+
+add gitignore

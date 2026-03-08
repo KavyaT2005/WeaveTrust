@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Signup - WeaveTrust</title>
+
+<style>
+body{
+    margin:0;
+    font-family:sans-serif;
+    background:#f0f2f5;
+}
+
+.box{
+    width:350px;
+    margin:80px auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 0 15px #ccc;
+}
+
+h2{
+    text-align:center;
+}
+
+input, select{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    background:#3b73d1;
+    color:white;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+}
+
+a{
+    display:block;
+    text-align:center;
+    margin-top:15px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+<h2>Create Account</h2>
+
+<form method="post">
+
+<input name="username" placeholder="Username" required>
+
+<input type="password" name="password" placeholder="Password" required>
+
+<!-- 🔥 NEW PHONE FIELD -->
+<input name="phone" placeholder="WhatsApp Number (+91XXXXXXXXXX)" required>
+
+<select name="role">
+<option value="owner">Owner</option>
+<option value="weaver">Weaver</option>
+</select>
+
+<button>Create Account</button>
+
+</form>
+
+<a href="/login">Already have account? Login</a>
+</div>
+
+</body>
+</html>
