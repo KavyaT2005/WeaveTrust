@@ -3,13 +3,13 @@ WeaveTrust – Textile Order & Production Tracking System
 Developed by:
 Kavya T
 
-Overview
+**Overview**
 
 WeaveTrust is a web-based textile production management system designed to simplify communication and workflow between textile owners and weavers. The system enables owners to assign production orders and allows weavers to update daily production progress. It also provides real-time performance tracking through graphical analytics, making it easier to monitor productivity and order completion.
 
 The platform integrates secure authentication, automated notifications, and production history tracking to ensure transparency and efficiency in textile manufacturing workflows.
 
-Key Features
+**Key Features**
 User Authentication
 
 Secure login and signup system for both owners and weavers with role-based dashboards.
@@ -62,7 +62,7 @@ Chart.js (performance visualization)
 
 Pandas (Excel report generation)
 
-Conclusion
+**Conclusion**
 
 WeaveTrust improves transparency and coordination between textile owners and weavers by digitizing the order management and production tracking process. The system provides real-time monitoring and performance insights, helping optimize workflow and productivity.
 
