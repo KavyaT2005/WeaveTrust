@@ -4,27 +4,25 @@
 <style>
 body{margin:0;background:#eee;font-family:sans-serif}
 .top{background:#3b73d1;color:white;padding:15px}
-
-.card{
-width:420px;margin:30px auto;background:white;
-padding:25px;border-radius:12px;
-box-shadow:0 0 12px #ccc}
-
-input{
-width:100%;padding:10px;margin:8px 0;
-border:1px solid #ccc;border-radius:6px}
-
-button{
-background:#3b73d1;color:white;border:none;
-padding:12px;width:100%;
-border-radius:6px;font-weight:bold}
-
-table{
-width:60%;margin:30px auto;background:white;
-border-collapse:collapse;box-shadow:0 0 10px #ccc}
-
+table{width:60%;margin:30px auto;background:white;border-collapse:collapse}
 td,th{padding:10px;border:1px solid #ddd;text-align:center}
 a{color:#3b73d1;text-decoration:none;font-weight:bold}
+
+/* 🔍 Search box style */
+.search-box{
+    text-align:center;
+    margin-top:20px;
+}
+.search-box input{
+    padding:8px;
+    width:250px;
+}
+.search-box button{
+    padding:8px 12px;
+    background:#3b73d1;
+    color:white;
+    border:none;
+}
 </style>
 </head>
 
@@ -35,17 +33,19 @@ Weaver Dashboard | {{session.user}}
 <a href="/logout" style="color:white;float:right">Logout</a>
 </div>
 
-<!-- 🔹 UPDATE PRODUCED METERS (TOP) -->
-<div class="card">
-<h3>Update Produced Meters</h3>
-<form method="post">
-<input name="id" placeholder="Order ID" required>
-<input name="meters" placeholder="Meters produced today" required>
-<button>Update</button>
-</form>
+<!-- 🔍 SEARCH BAR (NEW) -->
+<div class="search-box">
+    <form method="get">
+        <input
+            type="text"
+            name="search"
+            placeholder="Search owner name"
+            value="{{ search or '' }}"
+        >
+        <button type="submit">Search</button>
+    </form>
 </div>
 
-<!-- 🔹 CONNECTED OWNERS (BELOW UPDATE FORM) -->
 <h2 style="text-align:center">Connected Owners</h2>
 
 <table>
@@ -54,22 +54,18 @@ Weaver Dashboard | {{session.user}}
 <th>View Orders</th>
 </tr>
 
-{% set owners = orders | map(attribute='owner') | list | unique %}
-
 {% if owners %}
-    {% for owner_name in owners %}
+    {% for o in owners %}
     <tr>
-        <td>{{owner_name}}</td>
+        <td>{{o.owner}}</td>
         <td>
-            <a href="/weaver/owner/{{owner_name}}">
-                View Orders
-            </a>
+            <a href="/weaver/owner/{{o.owner}}">View Orders</a>
         </td>
     </tr>
     {% endfor %}
 {% else %}
 <tr>
-<td colspan="2">No owners assigned yet</td>
+<td colspan="2">No orders yet</td>
 </tr>
 {% endif %}
 

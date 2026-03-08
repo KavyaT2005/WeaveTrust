@@ -1,59 +1,168 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-body{margin:0;background:#eee;font-family:sans-serif}
-.top{background:#3b73d1;color:white;padding:15px}
-table{width:80%;margin:30px auto;background:white;border-collapse:collapse}
-td,th{padding:10px;border:1px solid #ddd;text-align:center}
-a{color:#3b73d1;text-decoration:none;font-weight:bold}
-</style>
+    <title>Weaver Orders</title>
+
+    <style>
+        body{
+            margin:0;
+            background:#f4f6f9;
+            font-family:Arial, sans-serif;
+        }
+
+        .top{
+            background:#3b73d1;
+            color:white;
+            padding:16px 24px;
+            font-size:18px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .container{
+            padding:30px;
+        }
+
+        h2{
+            margin-top:0;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            background:white;
+            box-shadow:0 6px 16px rgba(0,0,0,0.1);
+            border-radius:12px;
+            overflow:hidden;
+            margin-bottom:40px;
+        }
+
+        th, td{
+            padding:14px;
+            border-bottom:1px solid #eee;
+            text-align:center;
+        }
+
+        th{
+            background:#f1f4f8;
+        }
+
+        .badge{
+            padding:6px 14px;
+            border-radius:20px;
+            font-size:13px;
+            display:inline-block;
+        }
+
+        .inprogress{
+            background:#ffe9b3;
+            color:#8a5a00;
+        }
+
+        .completed{
+            background:#d4f4dd;
+            color:#187a3c;
+        }
+
+        input{
+            padding:8px;
+            width:120px;
+        }
+
+        button{
+            padding:8px 14px;
+            background:#3b73d1;
+            color:white;
+            border:none;
+            border-radius:6px;
+            cursor:pointer;
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="top">
-Orders for Owner: {{owner_name}}
-<a href="/weaver" style="color:white;float:right">⬅ Back</a>
+    Orders for Owner: {{ owner_name }}
+    <a href="/weaver" style="color:white;text-decoration:none;">← Back</a>
 </div>
 
-<h3 style="text-align:center">Orders</h3>
+<div class="container">
 
-<table>
-<tr>
-<th>ID</th>
-<th>Cloth</th>
-<th>Total</th>
-<th>Produced</th>
-<th>Status</th>
-</tr>
+    <!-- 🔹 ORDERS -->
+    <h2>Your Orders</h2>
 
-{% for o in orders %}
-<tr>
-<td>{{o.id}}</td>
-<td>{{o.cloth}}</td>
-<td>{{o.meters}}</td>
-<td>{{o.produced}}</td>
-<td>{{o.status}}</td>
-</tr>
-{% endfor %}
-</table>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Cloth</th>
+            <th>Total</th>
+            <th>Produced</th>
+            <th>Rate</th>
+            <th>Your Earnings</th>
+            <th>Status</th>
+            <th>Update</th>
+        </tr>
 
-<h3 style="text-align:center">Production History</h3>
+        {% for o in orders %}
+        <tr>
+            <td>{{ o.id }}</td>
+            <td>{{ o.cloth }}</td>
+            <td>{{ o.meters }}</td>
+            <td>{{ o.produced }}</td>
+            <td>₹{{ o.rate }}</td>
+            <td><b>₹{{ o.produced * o.rate }}</b></td>
+            <td>
+                {% if o.status == "Completed" %}
+                    <span class="badge completed">Completed</span>
+                {% else %}
+                    <span class="badge inprogress">In Progress</span>
+                {% endif %}
+            </td>
+            <td>
+                {% if o.status != "Completed" %}
+                <form method="post" style="display:flex;gap:8px;justify-content:center;">
+                    <input type="hidden" name="order_id" value="{{ o.id }}">
+                    <input name="meters" placeholder="Add meters" required>
+                    <button>Update</button>
+                </form>
+                {% else %}
+                    —
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
 
-<table>
-<tr>
-<th>Date</th>
-<th>Meters Added</th>
-</tr>
+    <!-- 🔹 PRODUCTION HISTORY -->
+    <h2>Production History</h2>
 
-{% for h in history %}
-<tr>
-<td>{{h.date}}</td>
-<td>{{h.meters}}</td>
-</tr>
-{% endfor %}
-</table>
+    <table>
+        <tr>
+            <th>Order ID</th>
+            <th>Cloth</th>
+            <th>Date</th>
+            <th>Meters Added</th>
+        </tr>
+
+        {% if history %}
+            {% for h in history %}
+            <tr>
+                <td>{{ h.order_id }}</td>
+                <td>{{ h.cloth }}</td>
+                <td>{{ h.date }}</td>
+                <td>{{ h.meters }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="4">No production history</td>
+            </tr>
+        {% endif %}
+    </table>
+
+</div>
 
 </body>
 </html>
